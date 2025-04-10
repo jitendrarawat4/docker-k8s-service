@@ -53,9 +53,15 @@ spec:
               name: mysql
           env:
             - name: MYSQL_ROOT_PASSWORD
-              value: generic
+              valueFrom:
+                secretKeyRef:
+                  name: cluster-secret
+                  key: mysql-root-password
             - name: MYSQL_DATABASE
-              value: employee
+              valueFrom:
+                configMapKeyRef:
+                  name: cluster-config-map
+                  key: employee-database-name
           volumeMounts:
             - name: mysql-persistent-storage
               mountPath: /var/lib/mysql

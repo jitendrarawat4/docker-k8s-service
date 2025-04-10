@@ -1,6 +1,6 @@
-# docker-k8s
+# docker-k8s-Microservice
 
-employee, departmnet with Junit and devops
+employee, department with Junit and devops toold like docker, kubernetes
 
 docker exec -it mysql-db mysql -u employee_user -p
 
@@ -19,6 +19,10 @@ docker push jitendra111/employee-service:0.0.1
 docker-compose down
 docker-compose up
 
+#######
+To encode values
+echo -n '<value>' | base64
+
 ---
 
 ### Kubernetes
@@ -31,6 +35,10 @@ minikube dashboard
 kubectl apply -f mysql-stateful-set.yml
 kubectl apply -f employee-deployment.yml
 
+kubectl apply -f k8s
+
+kubectl delete -f k8s
+
 ###To get pods
 kubectl get pod
 
@@ -42,12 +50,4 @@ kubectl get svc employee-service
 
 minikube service employee-lb
 
-## kubectl logs -f <pod-name>
-
-docker build -t order-creation-service:latest .
-docker build -t order-execution-service:latest .
-
-docker-compose down
-docker-compose up
-
-docker-compose up -d --build
+kubectl logs -f <pod-name>

@@ -34,7 +34,7 @@ spec:
             httpGet:
               path: /actuator/health
               port: 8080
-            initialDelaySeconds: 20
+            initialDelaySeconds: 30
             timeoutSeconds: 10
             successThreshold: 1
             failureThreshold: 3
@@ -43,14 +43,37 @@ spec:
             httpGet:
               path: /actuator/health
               port: 8080
-            initialDelaySeconds: 20
+            initialDelaySeconds: 30
             timeoutSeconds: 10
             successThreshold: 1
             failureThreshold: 3
             periodSeconds: 20
           env:
             - name: MYSQL_HOST
-              value: mysql-0.mysql
+              valueFrom:
+                configMapKeyRef:
+                  name: cluster-config-map
+                  key: mysql-database-host
+            - name: EMPLOYEE_DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: cluster-config-map
+                  key: employee-database-name
+            - name: MYSQL_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: cluster-config-map
+                  key: mysql-database-port
+            - name: MYSQL_DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: cluster-secret
+                  key: mysql-root-username
+            - name: MYSQL_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: cluster-secret
+                  key: mysql-root-password
           ports:
             - containerPort: 8080
               name: employee

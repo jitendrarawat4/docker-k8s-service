@@ -5,15 +5,13 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: generic
       MYSQL_DATABASE: employee
-      MYSQL_USER: root
       MYSQL_PASSWORD: generic
     restart: always
     ports:
       - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
-      - ./db-scripts:/usr/db-scripts
-
+      - ./db-scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
 volumes:
   mysql_data:
 
@@ -27,8 +25,8 @@ volumes:
 #      - mysql
 #    environment:
 #      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/employee
-#      SPRING_DATASOURCE_USERNAME: employee_user
-#      SPRING_DATASOURCE_PASSWORD: 123456789
+#      SPRING_DATASOURCE_USERNAME: generic
+#      SPRING_DATASOURCE_PASSWORD: root
 #    ports:
 #      - "8080:8080"
 #    restart: always
