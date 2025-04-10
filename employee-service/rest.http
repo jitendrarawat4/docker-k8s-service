@@ -1,0 +1,23 @@
+@host=http://localhost:8080
+
+###Create Employee
+Post {{host}}/api/employee HTTP/1.1
+Content-Type: application/json
+
+{
+"firstName": "John",
+"lastName": "Doe",
+"gender": "MALE",
+"birthDate": "1995-12-25",
+"hireDate": "2021-01-01"
+}
+
+###List All Employees
+GET {{host}}/api/employee HTTP/1.1
+
+###Get Employee by ID
+GET {{host}}/api/employee/1 HTTP/1.1
+
+
+###Delete by ID
+DELETE {{host}}/api/employee/1 HTTP/1.1
