@@ -2,6 +2,7 @@ package io.rawat.employee_service.model;
 
 import io.rawat.employee_service.entity.Gender;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.PastOrPresent;
 import lombok.AllArgsConstructor;
@@ -30,4 +31,7 @@ public class EmployeeCreateRequest {
 
     @PastOrPresent(message= "hire date needs to be past or present")
     private LocalDate hireDate;
+
+    @NotNull
+    private Integer departmentId;
 }

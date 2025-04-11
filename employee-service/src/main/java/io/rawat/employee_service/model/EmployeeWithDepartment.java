@@ -1,9 +1,7 @@
 package io.rawat.employee_service.model;
 
 import io.rawat.employee_service.entity.Gender;
-import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.PastOrPresent;
 import lombok.AllArgsConstructor;
@@ -17,24 +15,21 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class EmployeeResponse {
+public class EmployeeWithDepartment {
 
     private Integer employeeNumber;
 
-    @NotEmpty
     private String firstName;
 
-    @NotEmpty
     private String lastName;
 
     private Gender gender;
 
-    @Past(message= "birth date needs to be past date")
     private LocalDate birthDate;
 
-    @PastOrPresent(message= "hire date needs to be past or present")
     private LocalDate hireDate;
 
-    @NotNull
     private Integer departmentId;
+
+    private DepartmentResponse departmentResponse;
 }

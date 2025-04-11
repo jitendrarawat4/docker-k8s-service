@@ -23,7 +23,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class DepartmentServiceImplTest {
+class DepartmentServiceImplTest extends AbstractTestContainersTest{
 
     @Mock
     private DepartmentRepository departmentRepository;
@@ -76,7 +76,7 @@ class DepartmentServiceImplTest {
         //when
         DepartmentResponse departmentResponse = departmentServiceImpl.getByDepartmentNumber(departmentNumber);
         //then
-        assertThat(departmentResponse.getDepartmentName()).isEqualTo(departmentNumber);
+        assertThat(departmentResponse.getDepartmentNumber()).isEqualTo(departmentNumber);
         assertThat(departmentResponse.getDepartmentName()).isEqualTo(department.getDepartmentName());
     }
 

@@ -3,6 +3,7 @@ package io.rawat.employee_service.controller;
 import io.rawat.employee_service.entity.Employee;
 import io.rawat.employee_service.model.EmployeeCreateRequest;
 import io.rawat.employee_service.model.EmployeeResponse;
+import io.rawat.employee_service.model.EmployeeWithDepartment;
 import io.rawat.employee_service.service.EmployeeService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
@@ -32,6 +33,11 @@ public class EmployeeController {
     @GetMapping("{employeeNumber}")
     public EmployeeResponse findByEmployeeNumber(@PathVariable (value="employeeNumber") Integer employeeNumber){
         return employeeService.findByEmployeeNumber(employeeNumber);
+    }
+
+    @GetMapping("with-department")
+    public  List<EmployeeWithDepartment> getEmployeeWithDepartment(){
+        return employeeService.getEmployeeWithDepartment();
     }
 
     @DeleteMapping("{employeeNumber}")

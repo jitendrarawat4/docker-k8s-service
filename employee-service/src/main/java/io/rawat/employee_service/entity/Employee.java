@@ -2,6 +2,7 @@ package io.rawat.employee_service.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.PastOrPresent;
 import lombok.AllArgsConstructor;
@@ -43,5 +44,7 @@ public class Employee {
     @PastOrPresent(message= "hire date needs to be past or present")
     private LocalDate hireDate;
 
-
+    @Column(name= "dept_id")
+    @NotNull
+    private Integer departmentId;
 }

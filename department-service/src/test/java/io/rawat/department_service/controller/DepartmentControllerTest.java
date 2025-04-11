@@ -1,5 +1,6 @@
 package io.rawat.department_service.controller;
 
+import io.rawat.department_service.impl.AbstractTestContainersTest;
 import io.rawat.department_service.model.DepartmentRequest;
 import io.rawat.department_service.model.DepartmentResponse;
 import org.junit.jupiter.api.Test;
@@ -25,22 +26,12 @@ import static org.springframework.http.HttpMethod.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Testcontainers
-class DepartmentControllerTest {
+class DepartmentControllerTest extends AbstractTestContainersTest {
 
     private static final String API_BASE_PATH = "/api/department";
 
     @Autowired
     TestRestTemplate testRestTemplate;
-
-    @Container
-    @ServiceConnection
-    static MySQLContainer<?> mysqlContainer = new MySQLContainer<>(DockerImageName.parse("mysql:latest"));
-
-    @Test
-    void canEstablishConnection() {
-        assertThat(mysqlContainer.isCreated()).isTrue();
-        assertThat(mysqlContainer.isRunning()).isTrue();
-    }
 
     @Test
     void createDepartment() {
@@ -92,27 +83,39 @@ class DepartmentControllerTest {
 
     @Test
     void update() {
-        //given
+        // given
         DepartmentRequest departmentRequest = DepartmentRequest.builder()
                 .departmentName("Engineering")
                 .build();
-        ResponseEntity<DepartmentResponse> response = testRestTemplate.exchange(API_BASE_PATH, POST,
+
+        ResponseEntity<DepartmentResponse> response = testRestTemplate.exchange(
+                API_BASE_PATH, POST,
                 new HttpEntity<>(departmentRequest),
                 new ParameterizedTypeReference<>() {
                 });
+
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+
         DepartmentResponse departmentResponse = Objects.requireNonNull(response.getBody());
+
+        // Create the update request properly
+        DepartmentRequest updateRequest = DepartmentRequest.builder()
+                .departmentName("Tourism and Hospitality")
+                .build();
+
         ResponseEntity<DepartmentResponse> updateResponse = testRestTemplate.exchange(
                 API_BASE_PATH + "/" + departmentResponse.getDepartmentNumber(), PUT,
-                new HttpEntity<>(DepartmentRequest.builder().departmentName("Tourism and Hospitality")),
+                new HttpEntity<>(updateRequest),
                 new ParameterizedTypeReference<>() {
                 });
+
         assertThat(updateResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
 
         DepartmentResponse updatedDepartmentResponse = Objects.requireNonNull(updateResponse.getBody());
         assertThat(updatedDepartmentResponse.getDepartmentName()).isEqualTo("Tourism and Hospitality");
         assertThat(updatedDepartmentResponse.getDepartmentNumber()).isEqualTo(departmentResponse.getDepartmentNumber());
     }
+
 
     @Test
     void deleteDepartment() {
