@@ -1,4 +1,4 @@
-package io.rawat.employee_service.config;
+package io.rawat.department_service.config;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
@@ -12,3 +12,4 @@ public class ModelMapperConfig {
         return new ModelMapper();
     }
 }
+

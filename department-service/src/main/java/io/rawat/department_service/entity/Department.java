@@ -1,4 +1,4 @@
-package entity;
+package io.rawat.department_service.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
