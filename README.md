@@ -104,12 +104,12 @@ minikube service <service-name>
 
 ### To expose IP outside Kubernetes cluster
 
-kubectl expose pod <iamge-id> --type=NodePort --name=employee-service --port=8080 --target-port=8080
+kubectl expose pod <image-id> --type=NodePort --name=employee-service --port=8080 --target-port=8080
 
 kubectl port-forward <pod name> 8080:8080
 
 minikube image ls --format="table"
-minikube image rm <iamge-name>
+minikube image rm <image-name>
 
 ---
 
