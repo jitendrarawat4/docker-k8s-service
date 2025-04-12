@@ -23,6 +23,7 @@ spec:
       containers:
         - name: department
           image: jitendra111/department-service:0.0.1
+          imagePullPolicy: Always
           resources:
             requests:
               cpu: 100m
@@ -95,8 +96,8 @@ spec:
   ports:
     - name: department-svc
       protocol: TCP
-      port: 8085
-      targetPort: 80
+      port: 80
+      targetPort: 8085
 
 ---
 apiVersion: v1

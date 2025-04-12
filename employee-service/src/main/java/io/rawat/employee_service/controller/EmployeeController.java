@@ -35,7 +35,7 @@ public class EmployeeController {
         return employeeService.findByEmployeeNumber(employeeNumber);
     }
 
-    @GetMapping("with-department")
+    @GetMapping("with-department/fetch")
     public  List<EmployeeWithDepartment> getEmployeeWithDepartment(){
         return employeeService.getEmployeeWithDepartment();
     }

@@ -9,6 +9,7 @@ import io.rawat.employee_service.repository.EmployeeRepository;
 import io.rawat.employee_service.service.EmployeeService;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestTemplate;
@@ -30,6 +31,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final WebClient webClient;
     private final RestClient restClient;
     private final RestTemplate restTemplate;
+
+    @Value("${department-service-host-url}")
+    private String departmentServiceHostUrl;
 
     public EmployeeServiceImpl(EmployeeRepository employeeRepository, ModelMapper modelMapper, WebClient webClient,
                                RestClient restClient, RestTemplate restTemplate) {
@@ -98,7 +102,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     private List<DepartmentResponse> getDepartmentUsingWebClient() {
         log.info("Making call via Web Client");
         return webClient.get()
-                .uri("http://localhost:8085/api/department")
+                .uri(departmentServiceHostUrl+"/api/department")
                 .retrieve()
                 .bodyToFlux(DepartmentResponse.class)
                 .collectList()
@@ -108,7 +112,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     //Using Rest Client
     private List<DepartmentResponse> getDepartmentUsingRestClient() {
         DepartmentResponse[] departments = restClient.get()
-                .uri("http://localhost:8085/api/department")
+                .uri(departmentServiceHostUrl+"/api/department")
                 .retrieve()
                 .body(DepartmentResponse[].class);
         log.info("Making call via Rest Client");
@@ -119,7 +123,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     private List<DepartmentResponse> getDepartmentUsingRestTemplate() {
         log.info("Making call via Rest Template");
         DepartmentResponse[] departments = restTemplate.getForObject(
-                "http://localhost:8085/api/department",
+                departmentServiceHostUrl+"/api/department",
                 DepartmentResponse[].class
         );
         return departments != null ? Arrays.asList(departments) : Collections.emptyList();

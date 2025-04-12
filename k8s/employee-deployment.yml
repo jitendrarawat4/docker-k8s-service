@@ -23,6 +23,7 @@ spec:
       containers:
         - name: employee
           image: jitendra111/employee-service:0.0.1
+          imagePullPolicy: Always
           resources:
             requests:
               cpu: 100m
@@ -59,6 +60,11 @@ spec:
                 configMapKeyRef:
                   name: cluster-config-map
                   key: employee-database-name
+            - name: DEPARTMENT_SERVICE_HOST_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: cluster-config-map
+                  key: department-service-host
             - name: MYSQL_PORT
               valueFrom:
                 configMapKeyRef:
