@@ -1,20 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: config-server
+  name: configuration-server
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: config-server
+      app: configuration-server
   template:
     metadata:
       labels:
-        app: config-server
+        app: configuration-server
     spec:
       containers:
-        - name: config-server
+        - name: configuration-server
           image: jitendra111/configuration-server:0.0.1
+          imagePullPolicy: Always
           ports:
             - containerPort: 8888
           env:
@@ -26,10 +27,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: config-server
+  name: configuration-server
 spec:
   selector:
-    app: config-server
+    app: configuration-server
   ports:
     - name: http
       port: 8888

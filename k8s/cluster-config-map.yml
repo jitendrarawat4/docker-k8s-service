@@ -9,3 +9,5 @@ data:
   mysql-database-host: mysql-0.mysql
   mysql-database-port: "3306"
   department-service-host: http://department-svc
+  eureka-server-url: http://discovery-server:8761/eureka
+  config-server-url: http://configuration-server:8888
