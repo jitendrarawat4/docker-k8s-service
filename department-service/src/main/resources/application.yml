@@ -2,4 +2,4 @@ spring:
   application:
     name: department-service
   config:
-    import: optional:configserver:${EUREKA_SERVER_ADDRESS:http://localhost:8888}
+    import: optional:configserver:${CONFIG_SERVER_ADDRESS:http://localhost:8888}

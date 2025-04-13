@@ -75,6 +75,10 @@ spec:
                 secretKeyRef:
                   name: cluster-secret
                   key: mysql-root-password
+            - name: DISCOVERY_SERVER_ADDRESS
+              value: http://discovery-server:8761/eureka
+            - name: EUREKA_SERVER_ADDRESS
+              value: http://configuration-server:8888
           ports:
             - containerPort: 8085
               name: department
