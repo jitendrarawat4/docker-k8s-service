@@ -1,5 +1,6 @@
 package io.rawat.employee_service.config;
 
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestClient;
@@ -10,16 +11,19 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class ClientConfig {
 
     @Bean
-    WebClient webClient(){
-        return WebClient.builder().build();
+    @LoadBalanced
+    WebClient.Builder webClient(){
+        return WebClient.builder();
     }
 
     @Bean
-    RestClient restClient(){
-        return RestClient.builder().build();
+    @LoadBalanced
+    RestClient.Builder restClientBuilder(){
+        return RestClient.builder();
     }
 
     @Bean
+    @LoadBalanced
     RestTemplate restTemplate(){
         return new RestTemplate();
     }

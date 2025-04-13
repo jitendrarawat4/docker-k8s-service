@@ -28,19 +28,19 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     private final EmployeeRepository employeeRepository;
     private final ModelMapper modelMapper;
-    private final WebClient webClient;
-    private final RestClient restClient;
+    private final WebClient.Builder webClientBuilder;
+    private final RestClient.Builder restClientBuilder;
     private final RestTemplate restTemplate;
 
     @Value("${department-service-host-url}")
     private String departmentServiceHostUrl;
 
-    public EmployeeServiceImpl(EmployeeRepository employeeRepository, ModelMapper modelMapper, WebClient webClient,
-                               RestClient restClient, RestTemplate restTemplate) {
+    public EmployeeServiceImpl(EmployeeRepository employeeRepository, ModelMapper modelMapper, WebClient.Builder webClientBuilder,
+                               RestClient.Builder restClientBuilder, RestTemplate restTemplate) {
         this.employeeRepository = employeeRepository;
         this.modelMapper = modelMapper;
-        this.webClient = webClient;
-        this.restClient = restClient;
+        this.webClientBuilder = webClientBuilder;
+        this.restClientBuilder = restClientBuilder;
         this.restTemplate = restTemplate;
     }
 
@@ -101,7 +101,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     //Using Web Client
     private List<DepartmentResponse> getDepartmentUsingWebClient() {
         log.info("Making call via Web Client");
-        return webClient.get()
+        return webClientBuilder.build().get()
                 .uri(departmentServiceHostUrl+"/api/department")
                 .retrieve()
                 .bodyToFlux(DepartmentResponse.class)
@@ -111,7 +111,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     //Using Rest Client
     private List<DepartmentResponse> getDepartmentUsingRestClient() {
-        DepartmentResponse[] departments = restClient.get()
+        DepartmentResponse[] departments = restClientBuilder.build().get()
                 .uri(departmentServiceHostUrl+"/api/department")
                 .retrieve()
                 .body(DepartmentResponse[].class);
