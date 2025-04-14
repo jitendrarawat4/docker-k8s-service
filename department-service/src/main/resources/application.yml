@@ -1,5 +1,5 @@
 spring:
   application:
     name: department-service
-  config:
-    import: optional:configserver:${CONFIG_SERVER_ADDRESS:http://localhost:8888}
+
+spring.config.import: optional:configserver:${CONFIG_SERVER_ADDRESS:http://localhost:8888}
