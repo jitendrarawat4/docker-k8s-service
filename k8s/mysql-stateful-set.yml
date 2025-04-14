@@ -9,6 +9,7 @@ spec:
   volumeMode: Filesystem
   accessModes:
     - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
   storageClassName: manual
   hostPath:
     path: "/Users/jitendrarawat/Documents/mysql-data"
@@ -52,15 +53,9 @@ spec:
               name: mysql
           env:
             - name: MYSQL_ROOT_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: cluster-secret
-                  key: mysql-root-password
+              value: generic
             - name: MYSQL_DATABASE
-              valueFrom:
-                configMapKeyRef:
-                  name: cluster-config-map
-                  key: employee-database-name
+              value: employee
           volumeMounts:
             - name: mysql-persistent-storage
               mountPath: /var/lib/mysql
@@ -78,11 +73,11 @@ spec:
   selector:
     app: mysql
   clusterIP: None
-  sessionAffinity: None
-  sessionAffinityConfig:
-    clientIP:
-      timeoutSeconds: 10800
   ports:
     - name: mysql
       protocol: TCP
       port: 3306
+  sessionAffinity: None
+  sessionAffinityConfig:
+    clientIP:
+      timeoutSeconds: 10800
